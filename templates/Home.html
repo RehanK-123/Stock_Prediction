@@ -3,25 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home page</title>
+    <title>Home Page</title>
+    <style>
+        /* 📌 General Page Styling */
+body {
+    font-family: Arial, sans-serif; /* Set default font */
+    background-color: #f4f4f4; /* Light background for a clean look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full-screen height */
+    margin: 0; /* Remove default margin */
+}
+
+/* 📌 Form Container */
+.container {
+    background: white; /* White background for contrast */
+    padding: 20px; /* Spacing inside the container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    width: 320px; /* Form width */
+    text-align: center; /* Centering text */
+}
+
+/* 📌 Headings */
+h2 {
+    margin-bottom: 20px;
+    color: #333; /* Dark gray text color */
+}
+
+/* 📌 Labels */
+label {
+    font-weight: bold; /* Make labels more readable */
+    display: block; /* Each label appears on a new line */
+    margin: 10px 0 5px; /* Spacing between labels and inputs */
+}
+
+/* 📌 Input Fields */
+input[type="datetime-local"] {
+    width: 100%; /* Full-width input */
+    padding: 8px; /* Add padding for a better look */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded edges */
+    font-size: 16px; /* Larger font for readability */
+}
+
+/* 📌 Submit Button */
+input[type="submit"] {
+    background: #28a745; /* Green color for visibility */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    padding: 10px; /* Add padding */
+    width: 100%; /* Make it stretch the form width */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Adjust font size */
+    cursor: pointer; /* Change cursor on hover */
+    margin-top: 15px; /* Add spacing from the input field */
+}
+
+/* 📌 Submit Button Hover Effect */
+input[type="submit"]:hover {
+    background: #218838; /* Darker green on hover */
+}
+
+/* 📌 Output Section */
+.output-section {
+    margin-top: 20px; /* Add space between button and output */
+    font-size: 18px; /* Increase font size */
+    font-weight: bold; /* Make the output stand out */
+    color: #555; /* Medium gray text */
+}
+
+    </style>
 </head>
 <body>
-    <br><br>
-    <form action="/home" method="post">
-        <label for="date">Date:</label>
-        <input type="datetime" id="date" name="date">
-        <br><br>
-        <input type="submit" value="Predict">
-    </form>
-
-    <html>
-<form action="">
-    <br>
-    <label for="value">Price: </label>
-    <div id="output"></div>
-    <p class="output-statement">{{output}}</p>
-</div>
-</form>
-</body>
+    <div class="container"> <!-- Form wrapper for styling -->
+        <h2>Stock Price Prediction</h2> <!-- Heading for the form -->
+        
+        <form action="/home" method="post">
+            <!-- Date Input -->
+            <label for="date">Select Date:</label>
+            <input type="datetime" id="date" name="date" required>
+            
+            <!-- Submit Button -->
+            <input type="submit" value="Predict">
+            
+            <!-- Output Section -->
+            <div class="output-section">
+                <label for="output">Predicted Price:</label>
+                <output id="output">{{output}}</output> <!-- Displays predicted price -->
+            </div>
+        </form>
+    </div>
 </body>
 </html>

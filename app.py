@@ -1,65 +1,68 @@
-import pandas as pd 
+import pandas as pd
 import numpy as np
-import matplotlib.pyplot as mtp
-from sklearn.svm import SVR
-from sklearn.model_selection import train_test_split
-from flask import Flask,render_template,redirect,request,url_for
-date = None
+import keras as ks
+import matplotlib.pyplot as plt
+from flask import Flask, render_template, request
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error 
+
 app = Flask(__name__)
+
+df = pd.read_csv("Dominos_Stock_Data.csv")
+df["Date"] = pd.to_datetime(df["Date"])
+df.set_index("Date", inplace=True)
+
+# print(df)
+scaler = MinMaxScaler(feature_range=(0, 1))
+df["Adj Close"] = scaler.fit_transform(df[["Adj Close"]])
+
+def create_sequences(data, seq_length=10):
+    X, y = [], []
+    for i in range(len(data) - seq_length):
+        X.append(data[i : i + seq_length])
+        y.append(data[i + seq_length])
+
+    return np.array(X), np.array(y)
+
+seq_length = 10
+X, y = create_sequences(df["Adj Close"].values, seq_length)
+
+X = X.reshape((X.shape[0], X.shape[1], 1))
+
+split = int(0.8 * len(X))
+X_train, y_train = X[:split], y[:split]
+X_test, y_test = X[split:], y[split:]
+
+model = ks.models.Sequential([
+    ks.layers.LSTM(50, activation='relu', return_sequences=True, input_shape=(seq_length, 1)),
+    ks.layers.LSTM(50, activation='relu'),
+    ks.layers.Dense(1)
+])
+
+model.compile(optimizer='adam', loss='mse')
+model.fit(X_train, y_train, epochs=20, batch_size=16, validation_data=(X_test, y_test), verbose=1)
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route("/home",methods=["GET","POST"])
+@app.route("/home", methods=["POST", "GET"])
 def home():
-    #render_template('Home.html')
-    date = request.form.get("date",default="2020-01-01")
-    print(date)
-    date = pd.to_datetime(date)
-    m =[]
-    df = pd.read_csv("Dominos_Stock_Data.csv")
+    date_input = request.form.get("date", default="2020-09-10")
+    date_input = pd.to_datetime(date_input)
 
-    temp_df = df[pd.to_datetime(df['Date'])<=date]
+    # print(df.index)
+    temp_df = df[pd.to_datetime(df.index)<=date_input]
 
+    if len(temp_df) < seq_length:
+        return render_template("Home.html", output="Not enough data for prediction")
 
-    temp_df = temp_df.drop(columns=["Date","High","Low","Close","Volume"])
-    forecast_len = 1
-
-    temp_df["Predicted"] = temp_df["Adj Close"].shift(-1)
-
-    x = np.array(temp_df.drop(columns="Predicted"))[:-forecast_len]
-    y = np.array(temp_df['Predicted'])[:-forecast_len]
-
-    x_train = x[:-1]
-    y_train = y[:-1]
-
-    x_test = x[-1].reshape(1,-1)  #used to reshape the 1-D array into 2-D
-    y_test = y[-1].reshape(-1,1)  #used to reshape the single feature into a 1-D array
-
-    #x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2)
-
-    model = SVR(kernel='rbf',gamma=0.001,C=11,epsilon=0.55)
-    model.fit(x_train,y_train) #trains the model 
-
-    #model.score(x_test,y_test) "Gives the score when the train_test_split function is used"
-
-    res = model.predict(x_test) #predicts the value using non-linear vector regression
+    last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
     
-    print(res[0])
-
-    for i in range(len(x_test)):
-        m.append(x_test[i][1])
-
-
-
-    #mtp.scatter(np.array(m),y_test,color="green")
-    #mtp.plot(np.array(m),res,color="red")
-
-    #mtp.show()
-
-    return render_template("Home.html", output = res[0])
-
+    predicted_scaled = model.predict(last_seq)[0][0]
+    predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
+    # print(mean_absolute_error(last_seq, predicted_price), mean_squared_error(last_seq, predicted_price), r2_score(last_seq, predicted_price))
+    return render_template("Home.html", output=f"{predicted_price:.2f}")
 
 if __name__ == "__main__":
     app.run()
