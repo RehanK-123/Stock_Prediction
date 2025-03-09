@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import keras as ks
 import matplotlib.pyplot as plt
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error 
 
@@ -46,6 +46,10 @@ model.fit(X_train, y_train, epochs=20, batch_size=16, validation_data=(X_test, y
 def index():
     return render_template("index.html")
 
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory("static", "favicon.ico", mimetype="image/vnd.microsoft.icon")
+    
 @app.route("/home", methods=["POST", "GET"])
 def home():
     date_input = request.form.get("date", default="2020-09-10")
