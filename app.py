@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import keras as ks
 import matplotlib.pyplot as plt
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error 
 
@@ -48,7 +48,7 @@ def index():
 
 @app.route("/favicon.ico")
 def favicon():
-    return send_from_directory("static", "favicon.ico", mimetype="image/vnd.microsoft.icon")
+    return '', 204  # No Content response
     
 @app.route("/home", methods=["POST", "GET"])
 def home():
