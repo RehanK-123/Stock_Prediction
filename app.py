@@ -52,21 +52,22 @@ def favicon():
     
 @app.route("/home", methods=["POST", "GET"])
 def home():
-    date_input = request.form.get("date", default="2020-09-10")
-    date_input = pd.to_datetime(date_input)
+    print("FUCKING BOLLOCKS")
+#     date_input = request.form.get("date", default="2020-09-10")
+#     date_input = pd.to_datetime(date_input)
 
-    # print(df.index)
-    temp_df = df[pd.to_datetime(df.index)<=date_input]
+#     # print(df.index)
+#     temp_df = df[pd.to_datetime(df.index)<=date_input]
 
-    if len(temp_df) < seq_length:
-        return render_template("home.html", output="Not enough data for prediction")
+#     if len(temp_df) < seq_length:
+#         return render_template("home.html", output="Not enough data for prediction")
 
-    last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
+#     last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
     
-    predicted_scaled = model.predict(last_seq)[0][0]
-    predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
-    # print(mean_absolute_error(last_seq, predicted_price), mean_squared_error(last_seq, predicted_price), r2_score(last_seq, predicted_price))
-    return render_template("home.html", output=f"{predicted_price:.2f}")
+#     predicted_scaled = model.predict(last_seq)[0][0]
+#     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
+#     # print(mean_absolute_error(last_seq, predicted_price), mean_squared_error(last_seq, predicted_price), r2_score(last_seq, predicted_price))
+#     return render_template("home.html", output=f"{predicted_price:.2f}")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
