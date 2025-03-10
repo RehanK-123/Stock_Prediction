@@ -52,7 +52,7 @@ def favicon():
     
 @app.route("/home", methods=["POST", "GET"])
 def home():
-    return "Bovine Lummox"
+    predicted_price = 900.1234
 #     date_input = request.form.get("date", default="2020-09-10")
 #     date_input = pd.to_datetime(date_input)
 
@@ -67,7 +67,7 @@ def home():
 #     predicted_scaled = model.predict(last_seq)[0][0]
 #     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
 #     # print(mean_absolute_error(last_seq, predicted_price), mean_squared_error(last_seq, predicted_price), r2_score(last_seq, predicted_price))
-#     return render_template("home.html", output=f"{predicted_price:.2f}")
+    return render_template("home.html", output=f"{predicted_price:.2f}")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
