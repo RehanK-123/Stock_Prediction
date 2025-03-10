@@ -113,7 +113,7 @@ def home():
     print(f"💰 Predicted Price: {predicted_price}")
 
     # 🟢 Render the home page with the predicted price
-    return render_template("home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
+    return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
