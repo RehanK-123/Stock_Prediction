@@ -52,7 +52,7 @@ def favicon():
     
 @app.route("/home", methods=["POST", "GET"])
 def home():
-    print("FUCKING BOLLOCKS")
+    return "Bovine Lummox"
 #     date_input = request.form.get("date", default="2020-09-10")
 #     date_input = pd.to_datetime(date_input)
 
