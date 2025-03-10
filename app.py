@@ -72,7 +72,7 @@ def favicon():
     # return "".join([i for i in m])
     # # print(mean_absolute_error(last_seq, predicted_price), mean_squared_error(last_seq, predicted_price), r2_score(last_seq, predicted_price))
     # return render_template("Home.html", output=f"{predicted_price:.2f}")
-    @app.route("/home", methods=["POST", "GET"])
+@app.route("/home", methods=["POST", "GET"])
 def home():
     # 🟢 Get date input from the form
     date_input = request.form.get("date")  # No default, ensure valid input
