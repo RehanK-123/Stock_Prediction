@@ -79,27 +79,27 @@ def home():
 
     # 🟠 Validate if date was provided
     if not date_input:
-        return render_template("home.html", output="❌ Please enter a valid date.")
+        return render_template("Home.html", output="❌ Please enter a valid date.")
 
     # 🟢 Convert string date to pandas datetime format
     try:
         date_input = pd.to_datetime(date_input)
     except Exception as e:
-        return render_template("home.html", output=f"❌ Invalid date format: {e}")
+        return render_template("Home.html", output=f"❌ Invalid date format: {e}")
 
     # 🟠 Filter the dataset for dates up to the user-selected date
     temp_df = df[df.index <= date_input]
 
     # 🟠 Check if there's enough data for making a prediction
     if len(temp_df) < seq_length:
-        return render_template("home.html", output="❌ Not enough historical data for prediction.")
+        return render_template("Home.html", output="❌ Not enough historical data for prediction.")
 
     # 🟢 Prepare the last `seq_length` values for prediction
     last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
 
     # 🟠 Ensure the shape is correct before making a prediction
     if last_seq.shape != (1, seq_length, 1):
-        return render_template("home.html", output="❌ Data formatting error, please try a different date.")
+        return render_template("Home.html", output="❌ Data formatting error, please try a different date.")
 
     # 🟢 Make the stock price prediction
     predicted_scaled = model.predict(last_seq)[0][0]
