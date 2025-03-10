@@ -49,9 +49,7 @@ def index():
 @app.route("/favicon.ico")
 def favicon():
     return '', 204  # No Content response
-    
-@app.route("/home", methods=["POST", "GET"])
-def home():
+
     # m = ["a"]
     # date_input = request.form.get("date", default="2020-09-10")
     # # date_input = "2020-09-10"
