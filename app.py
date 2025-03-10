@@ -76,11 +76,10 @@ def favicon():
 def home():
     # 🟢 Get date input from the form
     date_input = request.form.get("date")  # No default, ensure valid input
-
+    return date_input
     # 🟠 Validate if date was provided
     if not date_input:
-        return "NO Date"
-        # return render_template("Home.html", output="❌ Please enter a valid date.")
+        return render_template("Home.html", output="❌ Please enter a valid date.")
     return "Date"
     # 🟢 Convert string date to pandas datetime format
     try:
