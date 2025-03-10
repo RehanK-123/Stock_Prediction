@@ -79,8 +79,9 @@ def home():
 
     # 🟠 Validate if date was provided
     if not date_input:
-        return render_template("Home.html", output="❌ Please enter a valid date.")
-
+        return "NO Date"
+        # return render_template("Home.html", output="❌ Please enter a valid date.")
+    return "Date"
     # 🟢 Convert string date to pandas datetime format
     try:
         date_input = pd.to_datetime(date_input)
