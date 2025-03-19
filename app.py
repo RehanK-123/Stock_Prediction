@@ -79,7 +79,7 @@ def home():
         date_input = request.form.get("date")
     # No default, ensure valid input
     # 🟠 Validate if date was provided
-    if not date_input:
+    else:
         return render_template("Home.html", output="❌ Please enter a valid date.")
     # 🟢 Convert string date to pandas datetime format
     try:
