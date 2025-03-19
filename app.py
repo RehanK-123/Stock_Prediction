@@ -49,17 +49,21 @@ def index():
 @app.route("/favicon.ico")
 def favicon():
     return '', 204 
-    
+
 @app.route("/home", methods=["POST", "GET"])
 def home():
-    # 🟢 Get date input from the form
-    if request.method == "POST":
-        date_input = request.form.get("date")
-    # No default, ensure valid input
+    if request.method == "GET":
+        return render_template("Home.html", output="")  # Show empty output initially
+
+    # 🟢 Handle POST request
+    date_input = request.form.get("date")
+
     # 🟠 Validate if date was provided
-    else:
+    if not date_input:
         return render_template("Home.html", output="❌ Please enter a valid date.")
-    print(request.form)
+
+    print(request.form)  # Debugging: Check if form data is received
+
     # 🟢 Convert string date to pandas datetime format
     try:
         date_input = pd.to_datetime(date_input)
@@ -86,13 +90,9 @@ def home():
     # 🟢 Convert scaled prediction back to the original stock price
     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
 
-    # 🟠 Debugging: Print values for checking
-    # print(f"📅 Date Input: {date_input}")
-    # print(f"📉 Predicted Scaled Value: {predicted_scaled}")
-    # print(f"💰 Predicted Price: {predicted_price}")
-
     # 🟢 Render the home page with the predicted price
-    return render_template("Home.html", output=f"Predicted Stock Price: {predicted_price:.2f}")
+    return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
