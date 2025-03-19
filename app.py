@@ -76,11 +76,9 @@ def favicon():
 def home():
     # 🟢 Get date input from the form
     date_input = request.form.get("date")  # No default, ensure valid input
-    return date_input
     # 🟠 Validate if date was provided
     if not date_input:
         return render_template("Home.html", output="❌ Please enter a valid date.")
-    return "Date"
     # 🟢 Convert string date to pandas datetime format
     try:
         date_input = pd.to_datetime(date_input)
@@ -108,9 +106,9 @@ def home():
     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
 
     # 🟠 Debugging: Print values for checking
-    print(f"📅 Date Input: {date_input}")
-    print(f"📉 Predicted Scaled Value: {predicted_scaled}")
-    print(f"💰 Predicted Price: {predicted_price}")
+    # print(f"📅 Date Input: {date_input}")
+    # print(f"📉 Predicted Scaled Value: {predicted_scaled}")
+    # print(f"💰 Predicted Price: {predicted_price}")
 
     # 🟢 Render the home page with the predicted price
     return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
