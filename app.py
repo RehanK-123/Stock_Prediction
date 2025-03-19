@@ -48,30 +48,8 @@ def index():
 
 @app.route("/favicon.ico")
 def favicon():
-    return '', 204  # No Content response
-
-    # m = ["a"]
-    # date_input = request.form.get("date", default="2020-09-10")
-    # # date_input = "2020-09-10"
-    # m.append("b")
-    # date_input = pd.to_datetime(date_input)
-    # m.append("b")
-    # # print(df.index)
-    # temp_df = df[pd.to_datetime(df.index)<=date_input]
-    # m.append("b")
-    # if len(temp_df) < seq_length:
-    #     m.append("b")
-    #     return render_template("home.html", output="Not enough data for prediction")
-    # m.append("b")
-    # last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
-    # m.append("b")
-    # predicted_scaled = model.predict(last_seq)[0][0]
-    # m.append("b")
-    # predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
-    # m.append("b")
-    # return "".join([i for i in m])
-    # # print(mean_absolute_error(last_seq, predicted_price), mean_squared_error(last_seq, predicted_price), r2_score(last_seq, predicted_price))
-    # return render_template("Home.html", output=f"{predicted_price:.2f}")
+    return '', 204 
+    
 @app.route("/home", methods=["POST", "GET"])
 def home():
     # 🟢 Get date input from the form
@@ -81,6 +59,7 @@ def home():
     # 🟠 Validate if date was provided
     else:
         return render_template("Home.html", output="❌ Please enter a valid date.")
+    print(request.form)
     # 🟢 Convert string date to pandas datetime format
     try:
         date_input = pd.to_datetime(date_input)
@@ -113,7 +92,7 @@ def home():
     # print(f"💰 Predicted Price: {predicted_price}")
 
     # 🟢 Render the home page with the predicted price
-    return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
+    return render_template("Home.html", output=f"Predicted Stock Price: {predicted_price:.2f}")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
