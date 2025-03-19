@@ -75,7 +75,9 @@ def favicon():
 @app.route("/home", methods=["POST", "GET"])
 def home():
     # 🟢 Get date input from the form
-    date_input = request.form.get("date")  # No default, ensure valid input
+    if request.method == "POST":
+        date_input = request.form.get("date")
+    # No default, ensure valid input
     # 🟠 Validate if date was provided
     if not date_input:
         return render_template("Home.html", output="❌ Please enter a valid date.")
