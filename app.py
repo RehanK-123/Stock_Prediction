@@ -58,6 +58,7 @@ def home():
 
     # 🟢 Handle POST request
     date_input = request.form.get("date")
+    date_input = pd.to_datetime(date_input).normalize()
     print("🚀 Request received: pending to process")
 
     # 🟠 Validate if date was provided
