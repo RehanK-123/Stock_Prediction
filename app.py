@@ -53,8 +53,8 @@ def favicon():
 @app.route("/home", methods=["POST", "GET"])
 def home():
     print("🚀 Request received:", request.method)
-    if request.method == "GET":
-        return render_template("Home.html", output="")  # Show empty output initially
+    #if request.method == "GET":
+     #   return render_template("Home.html", output="")  # Show empty output initially
 
     # 🟢 Handle POST request
     date_input = request.form.get("date")
