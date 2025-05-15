@@ -94,7 +94,7 @@ def home():
     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
 
     # 🟢 Render the home page with the predicted price
-    return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
+    return render_template("index.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
 
 
 if __name__ == "__main__":
