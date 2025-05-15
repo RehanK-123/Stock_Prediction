@@ -17,35 +17,52 @@
             color: white;
             text-align: center;
         }
-        
+
         .container {
             padding: 20px;
             border-radius: 10px;
         }
-        
+
         h1 {
             font-size: 3rem;
             margin-bottom: 10px;
         }
-        
+
         p {
             font-size: 1.2rem;
             margin-bottom: 20px;
         }
-        
-        .btn {
-            display: inline-block;
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="datetime-local"] {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
             padding: 12px 24px;
             font-size: 1rem;
             color: white;
             background-color: #e74c3c;
-            text-decoration: none;
+            border: none;
             border-radius: 8px;
+            cursor: pointer;
             transition: 0.3s;
         }
-        
-        .btn:hover {
+
+        input[type="submit"]:hover {
             background-color: #c0392b;
+        }
+
+        .output-section {
+            margin-top: 20px;
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -53,7 +70,20 @@
     <div class="container">
         <h1>Stock Predictor</h1>
         <p>Predict stock prices with AI-powered insights.</p>
-        <a href="/home" class="btn">Get Started</a>
+
+        <!-- Prediction Form -->
+        <form action="/home" method="POST">
+            <label for="date">Select Date:</label><br>
+            <input type="datetime-local" name="date" id="date" required><br><br>
+            <input type="submit" value="Predict">
+        </form>
+
+        <!-- Prediction Output -->
+        {% if output %}
+        <div class="output-section">
+            <p>Predicted Price: <strong>{{ output }}</strong></p>
+        </div>
+        {% endif %}
     </div>
 </body>
 </html>
