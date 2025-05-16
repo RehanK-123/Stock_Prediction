@@ -50,7 +50,7 @@ def index():
 def favicon():
     return '', 204 
 
-@app.route("/home", methods=["POST"])
+@app.route("/home", methods=["POST", "GET"])
 def home():
     print("🚀 Request received:", request.method)
     #if request.method == "GET":
