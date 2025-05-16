@@ -42,7 +42,7 @@ model = ks.models.Sequential([
 model.compile(optimizer='adam', loss='mse')
 model.fit(X_train, y_train, epochs=20, batch_size=16, validation_data=(X_test, y_test), verbose=1)
 
-@app.route("/")
+@app.route("/", methods= ["GET"])
 def index():
     return render_template("index.html")
 
@@ -50,7 +50,7 @@ def index():
 def favicon():
     return '', 204 
 
-@app.route("/home", methods=["POST", "GET"])
+@app.route("/home", methods=["POST"])
 def home():
     print("🚀 Request received:", request.method)
     #if request.method == "GET":
