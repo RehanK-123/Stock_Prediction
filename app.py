@@ -53,48 +53,34 @@ def favicon():
 @app.route("/home", methods=["POST", "GET"])
 def home():
     print("🚀 Request received:", request.method)
-    #if request.method == "GET":
-     #   return render_template("Home.html", output="")  # Show empty output initially
+    if request.method == "GET":
+        return render_template("Home.html", output="")
 
-    # 🟢 Handle POST request
-    date_input = request.form.get("date")
-    date_input = pd.to_datetime(date_input).normalize()
-    print("🚀 Request received: pending to process")
+    if request.method == "POST":
+        date_input = request.form.get("date")
+        print("🚀 Request received: pending to process")
+        
+        if not date_input:
+            return render_template("Home.html", output="❌ Please enter a valid date.")
 
-    # 🟠 Validate if date was provided
-    if not date_input:
-        return render_template("Home.html", output="❌ Please enter a valid date.")
+        print(request.form)  
+        try:
+            date_input = pd.to_datetime(date_input).normalize()
+        except Exception as e:
+            return render_template("Home.html", output=f"❌ Invalid date format: {e}")
 
-    print(request.form)  # Debugging: Check if form data is received
-
-    # 🟢 Convert string date to pandas datetime format
-    try:
-        date_input = pd.to_datetime(date_input)
-    except Exception as e:
-        return render_template("Home.html", output=f"❌ Invalid date format: {e}")
-
-    # 🟠 Filter the dataset for dates up to the user-selected date
-    temp_df = df[df.index <= date_input]
-
-    # 🟠 Check if there's enough data for making a prediction
-    if len(temp_df) < seq_length:
-        return render_template("Home.html", output="❌ Not enough historical data for prediction.")
-
-    # 🟢 Prepare the last `seq_length` values for prediction
-    last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
-
-    # 🟠 Ensure the shape is correct before making a prediction
-    if last_seq.shape != (1, seq_length, 1):
-        return render_template("Home.html", output="❌ Data formatting error, please try a different date.")
-
-    # 🟢 Make the stock price prediction
-    predicted_scaled = model.predict(last_seq)[0][0]
-
-    # 🟢 Convert scaled prediction back to the original stock price
-    predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
-
-    # 🟢 Render the home page with the predicted price
-    return render_template("index.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
+        temp_df = df[df.index <= date_input]
+        if len(temp_df) < seq_length:
+            return render_template("Home.html", output="❌ Not enough historical data for prediction.")
+  
+        last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
+        if last_seq.shape != (1, seq_length, 1):
+            return render_template("Home.html", output="❌ Data formatting error, please try a different date.")
+    
+        predicted_scaled = model.predict(last_seq)[0][0]
+    
+        predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
+        return render_template("index.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
 
 
 if __name__ == "__main__":
