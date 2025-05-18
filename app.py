@@ -44,8 +44,7 @@ model.fit(X_train, y_train, epochs=20, batch_size=16, validation_data=(X_test, y
 
 @app.route("/", methods= ["GET"])
 def index():
-    date_input = request.form.get("date")
-    return render_template("index.html", output= date_input)
+    return render_template("index.html")
 
 @app.route("/favicon.ico")
 def favicon():
