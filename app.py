@@ -56,8 +56,10 @@ def favicon():
 def home():
     print(f"\n🌐 Received {request.method} request at {datetime.now()}")
     print(f"📦 Request form data: {request.form}")
-    if request.method == "GET":
-        return render_template("Home.html", output= " ")
+    return render_template("Home.html", output= " ")
+
+@app.route("/result", methods= ["POST"])
+def result():
     print("🛑 POST request detected - processing...")
     date_input = request.form.get("date")
     print(f"📅 Raw date input: {date_input} ({type(date_input)})")
@@ -85,7 +87,7 @@ def home():
     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
         
     print(f"✅ Prediction: {predicted_price:.2f}")
-    return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
+    return render_template("result.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
 
 
 if __name__ == "__main__":
