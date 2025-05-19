@@ -59,11 +59,9 @@ def home():
         return render_template("Home.html", output="")
     
     if request.method == "POST":
-        local_date_input = request.form.get("date")
+        date_input = request.form.get("date")
         print(local_date_input, type(local_date_input))
-        date_input = datetime.strptime(local_date_input, "%Y-%m-%d")
-        #date_input = date_input.strftime("%Y-%m-%d")
-
+        
         print("🚀 Request received: pending to process")
         
         if not date_input:
