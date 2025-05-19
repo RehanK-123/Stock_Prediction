@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Predictor Result</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #007BFF; /* Blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #28a745; /* green text for success */
+        }
+
+        .form-group {
+            margin-top: 30px;
+        }
+
+        input[type="date"] {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title">📈 Stock Price Predictor</div>
+
+    <div class="form-group">
+        <form method="GET" action="/home">
+            <label for="date">Enter Date:</label>
+            <input type="date" id="date" name="date" required>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+
+    {% if output %}
+    <div class="result">{{ output }}</div>
+    {% endif %}
+</div>
+
+</body>
+</html>
