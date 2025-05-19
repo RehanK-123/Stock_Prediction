@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import keras as ks
 import matplotlib.pyplot as plt
+from datetime import datetime
 from flask import Flask, render_template, request
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error 
@@ -59,7 +60,9 @@ def home():
     if request.method == "POST":
         local_date_input = request.form.get("date")
         print(local_date_input)
-        date_input = local_date_input.strftime('%Y-%m-%d')
+        date_input = datetime.strptime(local_date_input, "%Y-%m-%d")
+        date_input = date_input.strftime("%Y-%m-%d")
+
         print("🚀 Request received: pending to process")
         
         if not date_input:
