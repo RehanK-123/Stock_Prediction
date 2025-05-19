@@ -57,13 +57,11 @@ def home():
     print(f"\n🌐 Received {request.method} request at {datetime.now()}")
     print(f"📦 Request form data: {request.form}")
     
-    if request.method == "GET":
-        print("🔄 Serving GET request")
+    if request.method == "POST":
         print("🛑 POST request detected - processing...")
         date_input = request.form.get("date")
         print(f"📅 Raw date input: {date_input} ({type(date_input)})")
-    
-    if request.method == "POST":  
+        
         if not date_input:
             print("❌ Empty date input")
             return render_template("Home.html", output="❌ Please enter a valid date.")
