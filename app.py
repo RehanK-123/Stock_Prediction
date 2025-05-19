@@ -63,7 +63,6 @@ def home():
         
     if not date_input:
         print("❌ Empty date input")
-        return render_template("Home.html", output="❌ Please enter a valid date.")
 
     try:
         # Handle datetime-local input format (YYYY-MM-DDTHH:MM)
@@ -73,12 +72,10 @@ def home():
         print(f"🗓️ Parsed date: {date_input}")
     except Exception as e:
         print(f"❌ Date parsing failed: {e}")
-        return render_template("Home.html", output=f"❌ Invalid date format: {e}")
 
     temp_df = df[df.index <= date_input]
     if len(temp_df) < seq_length:
         print(f"❌ Insufficient data (have {len(temp_df)}, need {seq_length})")
-        return render_template("Home.html", output="❌ Not enough historical data for prediction.")
   
     last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
     print(f"🧮 Sequence shape: {last_seq.shape}")
