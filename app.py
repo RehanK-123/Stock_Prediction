@@ -57,38 +57,37 @@ def home():
     print(f"\n🌐 Received {request.method} request at {datetime.now()}")
     print(f"📦 Request form data: {request.form}")
     
-    if request.method == "POST":
-        print("🛑 POST request detected - processing...")
-        date_input = request.form.get("date")
-        print(f"📅 Raw date input: {date_input} ({type(date_input)})")
+    print("🛑 POST request detected - processing...")
+    date_input = request.form.get("date")
+    print(f"📅 Raw date input: {date_input} ({type(date_input)})")
         
-        if not date_input:
-            print("❌ Empty date input")
-            return render_template("Home.html", output="❌ Please enter a valid date.")
+    if not date_input:
+        print("❌ Empty date input")
+        return render_template("Home.html", output="❌ Please enter a valid date.")
 
-        try:
-            # Handle datetime-local input format (YYYY-MM-DDTHH:MM)
-            if 'T' in date_input:
-                date_input = date_input.split('T')[0]
-            date_input = pd.to_datetime(date_input).normalize()
-            print(f"🗓️ Parsed date: {date_input}")
-        except Exception as e:
-            print(f"❌ Date parsing failed: {e}")
-            return render_template("Home.html", output=f"❌ Invalid date format: {e}")
+    try:
+        # Handle datetime-local input format (YYYY-MM-DDTHH:MM)
+        if 'T' in date_input:
+            date_input = date_input.split('T')[0]
+        date_input = pd.to_datetime(date_input).normalize()
+        print(f"🗓️ Parsed date: {date_input}")
+    except Exception as e:
+        print(f"❌ Date parsing failed: {e}")
+        return render_template("Home.html", output=f"❌ Invalid date format: {e}")
 
-        temp_df = df[df.index <= date_input]
-        if len(temp_df) < seq_length:
-            print(f"❌ Insufficient data (have {len(temp_df)}, need {seq_length})")
-            return render_template("Home.html", output="❌ Not enough historical data for prediction.")
+    temp_df = df[df.index <= date_input]
+    if len(temp_df) < seq_length:
+        print(f"❌ Insufficient data (have {len(temp_df)}, need {seq_length})")
+        return render_template("Home.html", output="❌ Not enough historical data for prediction.")
   
-        last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
-        print(f"🧮 Sequence shape: {last_seq.shape}")
+    last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
+    print(f"🧮 Sequence shape: {last_seq.shape}")
         
-        predicted_scaled = model.predict(last_seq)[0][0]
-        predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
+    predicted_scaled = model.predict(last_seq)[0][0]
+    predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
         
-        print(f"✅ Prediction: {predicted_price:.2f}")
-        return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
+    print(f"✅ Prediction: {predicted_price:.2f}")
+    return render_template("Home.html", output=f"💰 Predicted Stock Price: {predicted_price:.2f}")
 
 
 if __name__ == "__main__":
