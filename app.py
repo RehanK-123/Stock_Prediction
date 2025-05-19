@@ -60,7 +60,7 @@ def home():
     
     if request.method == "POST":
         date_input = request.form.get("date")
-        print(local_date_input, type(local_date_input))
+        print(date_input, type(date_input))
         
         print("🚀 Request received: pending to process")
         
