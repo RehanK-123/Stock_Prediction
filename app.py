@@ -56,10 +56,10 @@ def home():
     print("🚀 Request received:", request.method)
     if request.method == "GET":
         return render_template("Home.html", output="")
-
+    
     if request.method == "POST":
         local_date_input = request.form.get("date")
-        print(local_date_input)
+        print(local_date_input, type(local_date_input))
         date_input = datetime.strptime(local_date_input, "%Y-%m-%d")
         date_input = date_input.strftime("%Y-%m-%d")
 
