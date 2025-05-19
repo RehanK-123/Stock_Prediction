@@ -57,7 +57,7 @@ def home():
         return render_template("Home.html", output="")
 
     if request.method == "POST":
-        date_input = request.form.get("date")
+        date_input = request.POST.get("date")
         print("🚀 Request received: pending to process")
         
         if not date_input:
