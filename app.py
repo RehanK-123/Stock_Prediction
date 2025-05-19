@@ -58,6 +58,7 @@ def home():
 
     if request.method == "POST":
         local_date_input = request.args.get("date")
+        print(local_date_input)
         date_input = local_date_input.strftime('%Y-%m-%d')
         print("🚀 Request received: pending to process")
         
