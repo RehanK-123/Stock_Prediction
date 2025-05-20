@@ -58,7 +58,7 @@ def home():
     print(f"📦 Request form data: {request.form}")
     return render_template("Home.html", output= " ")
 
-@app.route("/result", methods= ["POST"])
+@app.route("/result", methods= ["POST", "GET"])
 def result():
     print("🛑 POST request detected - processing...")
     date_input = request.form.get("date")
