@@ -16,7 +16,7 @@ df.set_index("Date", inplace=True)
 
 # print(df)
 scaler = MinMaxScaler(feature_range=(0, 1))
-df["Adj Close"] = scaler.fit_transform(df[["Adj Clos
+df["Adj Close"] = scaler.fit_transform(df[["Adj Close"]])
 @app.route("/result", methods= ["POST", "GET"])
 def result():
     print("🛑 POST request detected - processing...")
