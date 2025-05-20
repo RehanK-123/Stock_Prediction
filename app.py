@@ -60,8 +60,6 @@ def home():
 
 @app.route("/result", methods= ["POST", "GET"])
 def result():
-    @app.route("/result", methods=["POST", "GET"])
-def result():
     print(f"\n🔍 Method: {request.method}")
     print(f"🧾 form: {request.form}")
     print(f"🔗 args: {request.args}")
