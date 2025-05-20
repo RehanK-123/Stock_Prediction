@@ -63,7 +63,7 @@ def result():
     print(f"\n🔍 Method: {request.method}")
     print(f"🧾 form: {request.form}")
     print(f"🔗 args: {request.args}")
-    date_input = request.form.get("date")
+    date_input = request.args["date"]
     print(f"📅 Raw date input: {date_input} ({type(date_input)})")
         
     if not date_input:
