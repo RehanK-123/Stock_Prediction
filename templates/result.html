@@ -65,19 +65,9 @@
 
 <div class="container">
     <div class="title">📈 Stock Price Predictor</div>
-
-    <div class="form-group">
-        <form method="GET" action="/home">
-            <label for="date">Enter Date:</label>
-            <input type="date" id="date" name="date" required>
-            <button type="submit">Predict</button>
-        </form>
-    </div>
-
-    {% if output %}
+        {% if output %}
     <div class="result">{{ output }}</div>
     {% endif %}
 </div>
-
 </body>
 </html>
