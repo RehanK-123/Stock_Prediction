@@ -61,7 +61,7 @@ def home():
 @app.route("/result", methods= ["POST", "GET"])
 def result():
     print("🛑 POST request detected - processing...")
-    date_input = request.form.get("date")
+    date_input = request.args.get("date")
     print(f"📅 Raw date input: {date_input} ({type(date_input)})")
         
     if not date_input:
