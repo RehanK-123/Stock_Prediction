@@ -56,7 +56,7 @@ def favicon():
 def home():
     print(f"\n🌐 Received {request.method} request at {datetime.now()}")
     print(f"📦 Request form data: {request.form}")
-    return render_template("Home.html", output= " ")
+    return render_template("Home.html")
 
 @app.route("/result", methods= ["POST", "GET"])
 def result():
