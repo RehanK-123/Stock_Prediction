@@ -61,6 +61,8 @@ def home():
 @app.route("/result", methods= ["POST", "GET"])
 def result():
     date = request.form.get("date")
+    date = pd.to_datetime(date).normalize()
+    
     return render_template("result.html", output= date)
 
 
