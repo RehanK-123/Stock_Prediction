@@ -63,6 +63,7 @@ def result():
     date = request.form.get("date")
     date = datetime.strptime(date, "%Y-%m-%dT%H:%M")
     date = date.strftime("%Y-%m-%d")
+    date = pd.to_datetime(date)
     temp_df = df[df.index <= date]
     if len(temp_df) < seq_length:
         print(f"❌ Insufficient data (have {len(temp_df)}, need {seq_length})")
