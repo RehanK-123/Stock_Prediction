@@ -71,8 +71,8 @@ def result():
     
     print(last_seq.shape, last_seq)
     print(model)
-    predicted_scaled = model.predict(last_seq)[0][0]
-    predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
+    # predicted_scaled = model.predict(last_seq)[0][0]
+    # predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
         
     # print(f"✅ Prediction: {predicted_price:.2f}")
     #"💰 Predicted Stock Price: {predicted_price:.2f}
