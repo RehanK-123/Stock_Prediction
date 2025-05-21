@@ -61,7 +61,8 @@ def home():
 @app.route("/result", methods= ["POST", "GET"])
 def result():
     date = request.form.get("date")
-    date = datetime.strptime(date, "%Y-%m-%d")
+    date = datetime.strptime(date, "%Y-%m-%dT%H%M")
+    date = date.strftime("%Y-%m-%d")
     return render_template("result.html", output= date)
 
 
