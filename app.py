@@ -26,7 +26,7 @@ def create_sequences(data, seq_length=10):
 
     return np.array(X), np.array(y)
 
-seq_length = 10
+seq_length = 5
 X, y = create_sequences(df["Adj Close"].values, seq_length)
 
 X = X.reshape((X.shape[0], X.shape[1], 1))
@@ -36,8 +36,7 @@ X_train, y_train = X[:split], y[:split]
 X_test, y_test = X[split:], y[split:]
 
 model = ks.models.Sequential([
-    ks.layers.LSTM(50, activation='relu', return_sequences=True, input_shape=(seq_length, 1)),
-    ks.layers.LSTM(50, activation='relu'),
+    ks.layers.LSTM(32, activation='tanh', input_shape=(seq_length, 1)),
     ks.layers.Dense(1)
 ])
 
@@ -71,10 +70,11 @@ def result():
     last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
     
     print(last_seq.shape, last_seq)
+    print(model)
     predicted_scaled = model.predict(last_seq)[0][0]
     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
         
-    print(f"✅ Prediction: {predicted_price:.2f}")
+    # print(f"✅ Prediction: {predicted_price:.2f}")
     #"💰 Predicted Stock Price: {predicted_price:.2f}
     return render_template("result.html", output= date)
 
