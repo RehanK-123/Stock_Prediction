@@ -69,12 +69,12 @@ def result():
     # if len(temp_df) < seq_length:
     #     print(f"❌ Insufficient data (have {len(temp_df)}, need {seq_length})")
     last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
-    # print(f"🧮 Sequence shape: {last_seq.shape}")
+    
     print(last_seq.shape, last_seq)
-    # predicted_scaled = model.predict(last_seq)[0][0]
-    # predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
+    predicted_scaled = model.predict(last_seq)[0][0]
+    predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
         
-    # print(f"✅ Prediction: {predicted_price:.2f}")
+    print(f"✅ Prediction: {predicted_price:.2f}")
     #"💰 Predicted Stock Price: {predicted_price:.2f}
     return render_template("result.html", output= date)
 
