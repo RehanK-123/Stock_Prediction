@@ -52,7 +52,7 @@ def result():
         
     # print(f"✅ Prediction: {predicted_price:.2f}")
    
-    return render_template("result.html", output=  "💰 Predicted Stock Price: {predicted_price:.2f}")
+    return render_template("result.html", output=  f"💰 Predicted Stock Price: {predicted_price:.2f}")
 
 
 if __name__ == "__main__":
