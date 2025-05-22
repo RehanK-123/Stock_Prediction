@@ -51,8 +51,8 @@ def result():
     predicted_price = scaler.inverse_transform([[predicted_scaled]])[0][0]
         
     # print(f"✅ Prediction: {predicted_price:.2f}")
-    #"💰 Predicted Stock Price: {predicted_price:.2f}
-    return render_template("result.html", output= int(predicted_price))
+   
+    return render_template("result.html", output=  "💰 Predicted Stock Price: {predicted_price:.2f}")
 
 
 if __name__ == "__main__":
