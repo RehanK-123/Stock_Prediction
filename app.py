@@ -43,7 +43,7 @@ def result():
     # if len(temp_df) < seq_length:
     #     print(f"❌ Insufficient data (have {len(temp_df)}, need {seq_length})")
     last_seq = temp_df["Adj Close"].values[-seq_length:].reshape(1, seq_length, 1)
-    with open('model_pkl' , 'rb') as f:
+    with open('model_pkl_1' , 'rb') as f:
         model = pickle.load(f)
     print(last_seq.shape, last_seq)
     print(model)
